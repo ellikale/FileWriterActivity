@@ -45,9 +45,6 @@ public class MyFileWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        //generateHiddenFile("glo");
-        //generateRegularFile();
     }
 
     public static void generateRegularFile(){
