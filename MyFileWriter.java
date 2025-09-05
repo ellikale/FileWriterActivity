@@ -45,5 +45,32 @@ public class MyFileWriter {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //generateHiddenFile("glo");
+        //generateRegularFile();
+    }
+
+    public static void generateRegularFile(){
+        try {
+            Files.write(Paths.get(".hiddenFolderActivity/bob"), "confidentialInfo".getBytes(StandardCharsets.UTF_8));
+            // Files.write(Paths.get("regularFile"), "thisIsConfidential".getBytes(StandardCharsets.UTF_8));
+            // Path ogPath = Paths.get("").toAbsolutePath();
+            // Path fPath = Paths.get(".youcantfindme");
+            // String originalPath = ogPath.toString() + "/regularFile";
+            // String 
+            // Files.move(ogPath, fPath, StandardCopyOption.REPLACE_EXISTING);
+            // Files.move("/FileWriterActivity/", null, StandardCopyOption.REPLACE_EXISTING);
+            // Files.write(Paths.get("/Desktop/FileWriterActivity/.youcantfindme/bob"), "confidentialInfo".getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void generateHiddenFile(String password, String fileName){
+        try {
+            Files.write(Paths.get(fileName), password.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
