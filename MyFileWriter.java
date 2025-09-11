@@ -79,4 +79,19 @@ public class MyFileWriter {
         File file = new File(fileName);
         System.out.println(file.length());
     }
+
+    /**
+    * Reads a text file and returns its contents as a string.
+    * 
+    * @param filePath the path to the file
+    * @return the contents of the file as a string
+    * @throws IOException if an I/O error occurs
+    */
+    public static String stringify(String filePath) throws IOException {
+        // TODO: Implement this method
+        // Read the file at filePath and return its contents as a String
+        Path fileP = Paths.get(filePath);
+        return Files.readString(fileP);
+    }
+
 }
