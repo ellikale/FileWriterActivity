@@ -13,40 +13,43 @@ public class MyFileWriter {
         String fileName4 = "example4.txt";
         String fileName5 = "example5.txt";
 
-        // // 1. Using FileWriter
-        // try (FileWriter writer = new FileWriter(fileName1)) {
-        //     writer.write(data);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // 1. Using FileWriter
+        try (FileWriter writer = new FileWriter(fileName1)) {
+            writer.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // // 2. Using BufferedWriter
-        // try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName2))) {
-        //     bufferedWriter.write(data);
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // 2. Using BufferedWriter
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName2))) {
+            bufferedWriter.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // // 3. Using FileOutputStream
-        // try (FileOutputStream outputStream = new FileOutputStream(fileName3)) {
-        //     outputStream.write(data.getBytes());
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // 3. Using FileOutputStream
+        try (FileOutputStream outputStream = new FileOutputStream(fileName3)) {
+            outputStream.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // // 4. Using BufferedOutputStream
-        // try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileName4))) {
-        //     bufferedOutputStream.write(data.getBytes());
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // 4. Using BufferedOutputStream
+        try (BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(fileName4))) {
+            bufferedOutputStream.write(data.getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        // // 5. Using Files (java.nio.file)
-        // try {
-        //     Files.write(Paths.get(fileName5), data.getBytes(StandardCharsets.UTF_8));
-        // } catch (IOException e) {
-        //     e.printStackTrace();
-        // }
+        // 5. Using Files (java.nio.file)
+        try {
+            Files.write(Paths.get(fileName5), data.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        printFileSize("example.txt", "example2.txt", "example3.txt");
+
     }
 
     public static void generateRegularFile(){
@@ -75,10 +78,16 @@ public class MyFileWriter {
     }
 
     // Calculate and print the file size using the File class
-    private static void printFileSize(String fileName) {
+    private static void printFileSize(String... fileNames) {
+    long totalSize = 0;
+    for (String fileName : fileNames) {
         File file = new File(fileName);
-        System.out.println(file.length());
+        if (file.exists()) {
+            totalSize += file.length();
+        }
     }
+    System.out.println("Total size of all files: " + totalSize + " bytes");
+}
 
     /**
     * Reads a text file and returns its contents as a string.
