@@ -1,5 +1,7 @@
 import java.io.*;
 import java.nio.file.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 public class MyFileWriter {
@@ -101,6 +103,39 @@ public class MyFileWriter {
         // Read the file at filePath and return its contents as a String
         Path fileP = Paths.get(filePath);
         return Files.readString(fileP);
+    }
+
+    public static String hashFile(String filePath){    
+        
+        try (BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(filePath))){
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while((bytesRead = bufferedInputStream.read(buffer)) != -1){
+                digest.update(buffer, 0, bytesRead);
+            }
+            byte[] hashBytes = digest.digest();
+            return makeItHex(hashBytes);
+        } catch (NoSuchAlgorithmException e) {
+            System.err.println("SHA-256 is unavailable right now.");
+        }catch (FileNotFoundException e) {
+            System.err.println("That file does not exist");
+        }catch (IOException e) {
+            System.err.println("Cannot read the file!");
+        }
+        return null;
+    }
+
+    public static String makeItHex(byte[] hashers){
+        //used stackoverflow for help
+        char[] hexArrayFormat = "0123456789ABCDEF".toCharArray();
+        char[] hexskis = new char[hashers.length *2];
+        for(int j = 0; j < hashers.length; j++){
+            int i = hashers[j] & 0xFF;
+            hexskis[j * 2] = hexArrayFormat[i >>> 4];
+            hexskis[j * 2 + 1] = hexArrayFormat[i & 0x0F];
+        }
+        return new String(hexskis);
     }
 
 }
